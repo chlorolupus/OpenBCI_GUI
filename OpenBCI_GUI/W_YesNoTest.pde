@@ -10,22 +10,28 @@
 //
 ///////////////////////////////////////////////////,
 
-class W_template extends Widget {
+class W_YesNoTest extends Widget {
 
     //to see all core variables/methods of the Widget class, refer to Widget.pde
     //put your custom variables here...
     Button widgetTemplateButton;
+    String widgetLabel;
+    float timePassed = 0.0f;
+    boolean testStarted = false;
+    boolean ifYesIsShown = true;
+    boolean isPressed = false;
+    String yesStatus =  "YES"
 
-    W_template(PApplet _parent){
+    W_YesNoTest(PApplet _parent){
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
 
         //This is the protocol for setting up dropdowns.
         //Note that these 3 dropdowns correspond to the 3 global functions below
         //You just need to make sure the "id" (the 1st String) has the same name as the corresponding function
         addDropdown("YesNoTest", "Drop 1", Arrays.asList("A", "B"), 0);
-        widgetTemplateButton = new Button (x + w/2, y + h/2, 200, navHeight, "Design Your Own Widget!", 12);
+
+        widgetTemplateButton = new Button (x + w/2, y + h/2, 400, navHeight, "Press Me To Start Yes / Off Check", 12);
         widgetTemplateButton.setFont(p4, 14);
-        widgetTemplateButton.setURL("https://openbci.github.io/Documentation/docs/06Software/01-OpenBCISoftware/GUIWidgets#custom-widget");
     }
 
     void update(){
@@ -33,11 +39,24 @@ class W_template extends Widget {
 
         //put your code here...
         //If using a TopNav object, ignore interaction with widget object (ex. widgetTemplateButton)
-        if (topNav.configSelector.isVisible || topNav.layoutSelector.isVisible) {
+        if (topNav.configSelector.isVisible || topNav.layoutSelector.isVisible)
+        {
             widgetTemplateButton.setIsActive(false);
             widgetTemplateButton.setIgnoreHover(true);
-        } else {
+        } 
+        else 
+        {
             widgetTemplateButton.setIgnoreHover(false);
+        }
+
+        if(!testStarted)
+        {
+            widgetLabel = "Start Calibration";
+            
+        }
+        else
+        {
+            widgetLabel = "Keep me pressed when you see NO";
         }
 
     }
@@ -46,13 +65,15 @@ class W_template extends Widget {
         super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
 
         //put your code here... //remember to refer to x,y,w,h which are the positioning variables of the Widget class
+        if(testStarted)
+        {
+            ReverseTime();
+        }
         pushStyle();
-
         widgetTemplateButton.draw();
-
+        text(,x + w/2, y + h/2+100, 400);
         popStyle();
-
-    }
+    }   
 
     void screenResized(){
         super.screenResized(); //calls the parent screenResized() method of Widget (DON'T REMOVE)
@@ -68,9 +89,11 @@ class W_template extends Widget {
 
         //put your code here...
         //If using a TopNav object, ignore interaction with widget object (ex. widgetTemplateButton)
-        if (!topNav.configSelector.isVisible && !topNav.layoutSelector.isVisible) {
+        if (!topNav.configSelector.isVisible && !topNav.layoutSelector.isVisible) 
+        {
             if(widgetTemplateButton.isMouseHere()){
                 widgetTemplateButton.setIsActive(true);
+                isPressed = true;
             }
         }
     }
@@ -79,29 +102,86 @@ class W_template extends Widget {
         super.mouseReleased(); //calls the parent mouseReleased() method of Widget (DON'T REMOVE)
 
         //put your code here...
-        if(widgetTemplateButton.isActive && widgetTemplateButton.isMouseHere()){
-            widgetTemplateButton.goToURL();
+        if(widgetTemplateButton.isActive && widgetTemplateButton.isMouseHere())
+        {
+            if(!testStarted)
+            {
+                testStarted=true;
+                
+            }
+            else
+            {
+                if(key == 'L')
+                {
+                    isPressed = false;
+                }  
+            }
         }
         widgetTemplateButton.setIsActive(false);
 
     }
+    void keyPressed() 
+    {
+        if(key == 'L')
+        {
+            if(!testStarted)
+            {
+                testStarted = true;
+            }
+            else
+            {
+                isPressed = true;
+            }
+        }
+    }
+
+    void keyReleased() {
+        if(key == 'L')
+            {
+            if(!mousePressed)
+            {
+                isPressed = false;
+            }
+        }
+    }
 
     //add custom functions here
-    void customFunction(){
+    void ReverseTime(){
         //this is a fake function... replace it with something relevant to this widget
-
+        if(testStarted)
+        {   
+            if(ifYesIsShown){             
+            timePassed = second();
+                if(second() % 5 == 0 )
+                {
+                background(1f,0f,0f); 
+                ifYesIsShown = false;
+                }
+            }
+            else
+            {
+                timePassed ();
+                if(second() % 5 == 0)
+                {
+                    
+                    ifYesIsShown = true;
+                }
+            }
+        }
     }
-
-};
 
 //These functions need to be global! These functions are activated when an item from the corresponding dropdown is selected
-void YesNoTest(int n){
+
+void Dropdown1(int n){
     println("Item " + (n+1) + " selected from Dropdown 1");
-    if(n==0){
+    if(n==0)
+    {
         //do this
-    } else if(n==1){
+    } 
+    else if(n==1)
+    {
         //do this instead
     }
-
     closeAllDropdowns(); // do this at the end of all widget-activated functions to ensure proper widget interactivity ... we want to make sure a click makes the menu close
+    }
 }

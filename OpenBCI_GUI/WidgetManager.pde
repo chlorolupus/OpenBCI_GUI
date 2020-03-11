@@ -30,7 +30,7 @@ W_MarkerMode w_markermode;
 W_playback w_playback;
 W_SSVEP w_ssvep;
 W_Spectrogram w_spectrogram;
-
+W_YesNoTest w_yesnotest;
 //ADD YOUR WIDGET TO WIDGETS OF WIDGETMANAGER
 void setupWidgets(PApplet _this, ArrayList<Widget> w){
     // println("  setupWidgets start -- " + millis());
@@ -103,6 +103,10 @@ void setupWidgets(PApplet _this, ArrayList<Widget> w){
     w_spectrogram = new W_Spectrogram(_this);
     w_spectrogram.setTitle("Spectrogram");
     addWidget(w_spectrogram, w);
+
+    w_yesnotest = new W_YesNoTest(_this);
+    w_yesnotest.setTitle("YesNoTest");
+    addWidget(w_yesnotest, w);
 
     //only instantiate these widgets if you are using a Cyton board for live streaming
     if(eegDataSource == DATASOURCE_CYTON){
