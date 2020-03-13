@@ -20,7 +20,7 @@ class W_YesNoTest extends Widget {
     boolean testStarted = false;
     boolean ifYesIsShown = true;
     boolean isPressed = false;
-    String yesStatus =  "YES"
+    String yesStatus =  "YES";
 
     W_YesNoTest(PApplet _parent){
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -28,7 +28,6 @@ class W_YesNoTest extends Widget {
         //This is the protocol for setting up dropdowns.
         //Note that these 3 dropdowns correspond to the 3 global functions below
         //You just need to make sure the "id" (the 1st String) has the same name as the corresponding function
-        addDropdown("YesNoTest", "Drop 1", Arrays.asList("A", "B"), 0);
 
         widgetTemplateButton = new Button (x + w/2, y + h/2, 400, navHeight, "Press Me To Start Yes / Off Check", 12);
         widgetTemplateButton.setFont(p4, 14);
@@ -41,7 +40,6 @@ class W_YesNoTest extends Widget {
         //If using a TopNav object, ignore interaction with widget object (ex. widgetTemplateButton)
         if (topNav.configSelector.isVisible || topNav.layoutSelector.isVisible)
         {
-            widgetTemplateButton.setIsActive(false);
             widgetTemplateButton.setIgnoreHover(true);
         } 
         else 
@@ -62,8 +60,7 @@ class W_YesNoTest extends Widget {
     }
 
     void draw(){
-        super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
-
+        super.draw(); //calls the parent draw() method of Widget (DON'T
         //put your code here... //remember to refer to x,y,w,h which are the positioning variables of the Widget class
         if(testStarted)
         {
@@ -71,7 +68,8 @@ class W_YesNoTest extends Widget {
         }
         pushStyle();
         widgetTemplateButton.draw();
-        text(,x + w/2, y + h/2+100, 400);
+        textSize(40);
+        text(yesStatus,x + w/2, y + h/2);
         popStyle();
     }   
 
@@ -106,82 +104,58 @@ class W_YesNoTest extends Widget {
         {
             if(!testStarted)
             {
-                testStarted=true;
-                
-            }
-            else
-            {
-                if(key == 'L')
-                {
-                    isPressed = false;
-                }  
-            }
-        }
-        widgetTemplateButton.setIsActive(false);
-
-    }
-    void keyPressed() 
-    {
-        if(key == 'L')
-        {
-            if(!testStarted)
-            {
                 testStarted = true;
+                    
             }
             else
-            {
-                isPressed = true;
-            }
-        }
-    }
-
-    void keyReleased() {
-        if(key == 'L')
-            {
-            if(!mousePressed)
             {
                 isPressed = false;
-            }
+            }  
         }
-    }
+    }   
 
     //add custom functions here
     void ReverseTime(){
         //this is a fake function... replace it with something relevant to this widget
         if(testStarted)
         {   
-            if(ifYesIsShown){             
             timePassed = second();
-                if(second() % 5 == 0 )
+            if(ifYesIsShown){            
+                if(timePassed % 5 == 0 )
                 {
-                background(1f,0f,0f); 
-                ifYesIsShown = false;
+                    yesStatus = "NO";
+                    println(ifYesIsShown);
+                // background(1f,0f,0f); 
+                    ifYesIsShown = false;
+                    timePassed=0;
                 }
             }
-            else
+            else    
             {
-                timePassed ();
-                if(second() % 5 == 0)
+                timePassed = second();
+                if(timePassed % 5 == 0)
                 {
-                    
+                    yesStatus = "YES"
                     ifYesIsShown = true;
+                    println(ifYesIsShown);
+                    timePassed=0;
                 }
             }
         }
     }
+}
 
 //These functions need to be global! These functions are activated when an item from the corresponding dropdown is selected
 
-void Dropdown1(int n){
-    println("Item " + (n+1) + " selected from Dropdown 1");
-    if(n==0)
-    {
-        //do this
-    } 
-    else if(n==1)
-    {
-        //do this instead
-    }
-    closeAllDropdowns(); // do this at the end of all widget-activated functions to ensure proper widget interactivity ... we want to make sure a click makes the menu close
-    }
-}
+// void Dropdown1(int n){
+//     println("Item " + (n+1) + " selected from Dropdown 1");
+//     if(n==0)
+//     {
+//         //do this
+//     } 
+//     else if(n==1)
+//     {
+//         //do this instead
+//     }
+//     closeAllDropdowns(); // do this at the end of all widget-activated functions to ensure proper widget interactivity ... we want to make sure a click makes the menu close
+//     }
