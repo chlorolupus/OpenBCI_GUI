@@ -21,7 +21,7 @@ class W_YesNoTest extends Widget {
     boolean ifYesIsShown = true;
     boolean isPressed = false;
     String yesStatus =  "YES";
-
+    boolean screenYesNoChanged = false;
     W_YesNoTest(PApplet _parent){
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
 
@@ -55,8 +55,7 @@ class W_YesNoTest extends Widget {
         else
         {
             widgetLabel = "Keep me pressed when you see NO";
-        }
-
+        }   
     }
 
     void draw(){
@@ -68,12 +67,13 @@ class W_YesNoTest extends Widget {
         }
         pushStyle();
         widgetTemplateButton.draw();
-        textSize(40);
-        text(yesStatus,x + w/2, y + h/2);
+        textSize(40);  
+        fill(0,0,0);
+        text(yesStatus,x + w*3/4, y + h*3/4);
         popStyle();
     }   
 
-    void screenResized(){
+    void screenResized(){   
         super.screenResized(); //calls the parent screenResized() method of Widget (DON'T REMOVE)
 
         //put your code here...
@@ -96,12 +96,12 @@ class W_YesNoTest extends Widget {
         }
     }
 
-    void mouseReleased(){
+    void mouseReleased()
+    {
         super.mouseReleased(); //calls the parent mouseReleased() method of Widget (DON'T REMOVE)
 
         //put your code here...
-        if(widgetTemplateButton.isActive && widgetTemplateButton.isMouseHere())
-        {
+        
             if(!testStarted)
             {
                 testStarted = true;
@@ -109,13 +109,14 @@ class W_YesNoTest extends Widget {
             }
             else
             {
+                widgetTemplateButton.setIsActive(true);
                 isPressed = false;
             }  
-        }
     }   
 
-    //add custom functions here
-    void ReverseTime(){
+    //add custom functions here 
+    void ReverseTime()
+    {
         //this is a fake function... replace it with something relevant to this widget
         if(testStarted)
         {   
@@ -123,28 +124,42 @@ class W_YesNoTest extends Widget {
             if(ifYesIsShown){            
                 if(timePassed % 5 == 0 )
                 {
+                    if(screenYesNoChanged == false)
+                    {
                     yesStatus = "NO";
-                    println(ifYesIsShown);
                 // background(1f,0f,0f); 
                     ifYesIsShown = false;
                     timePassed=0;
+                    screenYesNoChanged = true;
+                    }
+                }
+                else 
+                {
+                    screenYesNoChanged=false;
                 }
             }
             else    
             {
-                timePassed = second();
                 if(timePassed % 5 == 0)
                 {
-                    yesStatus = "YES"
+                    if(screenYesNoChanged == false)
+                    {
+                    yesStatus = "YES";
                     ifYesIsShown = true;
-                    println(ifYesIsShown);
                     timePassed=0;
+                    screenYesNoChanged = true;
+                    }
+                }
+                else 
+                {
+                    screenYesNoChanged=false;
                 }
             }
         }
+        println(yesStatus);
+        println("IsPressed: " + isPressed);
     }
 }
-
 //These functions need to be global! These functions are activated when an item from the corresponding dropdown is selected
 
 // void Dropdown1(int n){

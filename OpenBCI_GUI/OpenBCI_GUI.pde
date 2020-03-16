@@ -1240,7 +1240,7 @@ void systemDraw() { //for drawing to the screen
         if ((millis() - settings.timeOfGUIreinitialize) > settings.reinitializeGUIdelay) {
             // println("attempting to draw GUI...");
             try {
-                // println("GUI DRAW!!! " + millis());
+                // println("GUI Dhttps://github.com/chlorolupus/OpenBCI_GUI!!! " + millis());
                 //draw GUI widgets (visible/invisible) using widget manager
                 wm.draw();
             } catch (Exception e) {

@@ -132,9 +132,8 @@ void createPlaybackFileFromSD() {
     dataWriter.println("%");
     dataWriter.println("%Sample Rate = 250.0 Hz");
     dataWriter.println("%First Column = SampleIndex");
-    dataWriter.println("%Last Column = Timestamp");
     dataWriter.println("%Other Columns = EEG data in microvolts followed by Accel Data (in G) interleaved with Aux Data");
-
+    dataWriter.println("%Last Column = Timestamp");
 }
 
 void sdFileSelected(File selection) {
@@ -211,11 +210,14 @@ public class OutputFile_rawtxt {
         output.println("%Number of channels = " + nchan);
         output.println("%Sample Rate = " + fs_Hz + " Hz");
         output.println("%First Column = SampleIndex");
+        output.println("%3 Columns before last = IsTheWidget Showing west?  ");
         output.println("%Last Column = Timestamp ");
-        output.println("%Other Columns = EEG data in microvolts followed by Accel Data (in G) interleaved with Aux Data");
+        output.println("%Other Columns = Screen Yes / Press Yes / EEG data in microvolts followed by Accel Data (in G) interleaved with Aux Data");
         output.flush();
     }
 
+
+//  Write Log File (TIMMY: Need to Write Yes / No in writeRawData)
     public void writeRawData_dataPacket(DataPacket_ADS1299 data, float scale_to_uV, float scale_for_aux, int stopByte, long timestamp) {
         //get current date time with Date()
         if (output != null) {
