@@ -191,7 +191,6 @@ public int outputDataSource = OUTPUT_SOURCE_ODF;
 String serial_output_portName = "/dev/tty.usbmodem1421";  //must edit this based on the name of the serial/COM port
 Serial serial_output;
 int serial_output_baud = 9600; //baud rate from the Arduino
-
 //Control Panel for (re)configuring system settings
 PlotFontInfo fontInfo;
 
@@ -263,6 +262,10 @@ int hubTimerInterval = 2500; //try every 2.5 seconds, 8*2.5=20seconds
 PApplet ourApplet;
 
 static CustomOutputStream outputStream;
+
+//Part by Timmy to account for Yes / No detection
+public static boolean ifYesIsShown = false;
+public static boolean isPressed = false;
 
 //Variables from TopNav.pde. Used to set text when stopping/starting data stream.
 public final static String stopButton_pressToStop_txt = "Stop Data Stream";

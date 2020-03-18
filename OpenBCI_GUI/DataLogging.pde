@@ -218,26 +218,28 @@ public class OutputFile_rawtxt {
 
 
 //  Write Log File (TIMMY: Need to Write Yes / No in writeRawData)
-    public void writeRawData_dataPacket(DataPacket_ADS1299 data, float scale_to_uV, float scale_for_aux, int stopByte, long timestamp) {
-        //get current date time with Date()
-        if (output != null) {
-            output.print(Integer.toString(data.sampleIndex));
-            writeValues(data.values,scale_to_uV);
-            if (eegDataSource == DATASOURCE_GANGLION) {
-                writeAccValues(data.auxValues, scale_for_aux);
-            } else {
-                if (stopByte == 0xC1) {
-                    writeAuxValues(data);
-                } else {
+        public void writeRawData_dataPacket(DataPacket_ADS1299 data, float scale_to_uV, float scale_for_aux, int stopByte, long timestamp) {
+            //get current date time with Date()
+            if (output != null) {
+                output.print(Integer.toString(data.sampleIndex));
+                writeValues(data.values,scale_to_uV);
+                if (eegDataSource == DATASOURCE_GANGLION) {
                     writeAccValues(data.auxValues, scale_for_aux);
+                } else {
+                    if (stopByte == 0xC1) {
+                        writeAuxValues(data);
+                    } else {
+                        writeAccValues(data.auxValues, scale_for_aux);
+                    }
                 }
+                output.print( ", " + ifYesIsShown);
+                output.print( ", " + isPressed);
+                output.print( ", " + dateFormat.format(new Date(timestamp)));
+                output.print( ", " + timestamp);
+                output.println(); rowsWritten++;
+                //output.flush();
             }
-            output.print( ", " + dateFormat.format(new Date(timestamp)));
-            output.print( ", " + timestamp);
-            output.println(); rowsWritten++;
-            //output.flush();
         }
-    }
 
     private void writeValues(int[] values, float scale_fac) {
         int nVal = values.length;
@@ -922,7 +924,7 @@ public class OutputFile_BDF {
 
         // If no file name is supplied then we generate one based off the current
         //  date and time of day.
-        output += year() + "-";
+        output += year() + "-"; 
         if (month() < 10) output += "0";
         output += month() + "-";
         if (day() < 10) output += "0";
@@ -1499,7 +1501,7 @@ void convert16channelLine() {
             } else {                  // if the number is positive
                 h = "00" + hexNums[i];   // keep it positive
             }
-            if (i > 16) { // accelerometer data needs another byte
+            if (i > 16) { // accelerometer data needs another byte  
                 if (h.charAt(0) == 'F') {
                     h = "FF" + h;
                 } else {

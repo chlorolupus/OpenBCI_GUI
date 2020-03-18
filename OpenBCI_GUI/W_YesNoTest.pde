@@ -18,8 +18,8 @@ class W_YesNoTest extends Widget {
     String widgetLabel;
     float timePassed = 0.0f;
     boolean testStarted = false;
-    boolean ifYesIsShown = true;
-    boolean isPressed = false;
+    // boolean ifYesIsShown = true;
+    // boolean isPressed = false;
     String yesStatus =  "YES";
     boolean screenYesNoChanged = false;
     W_YesNoTest(PApplet _parent){
@@ -156,8 +156,8 @@ class W_YesNoTest extends Widget {
                 }
             }
         }
-        println(yesStatus);
-        println("IsPressed: " + isPressed);
+        // println(yesStatus);
+        // println("ButtonStatus.isPressed: " + ButtonStatus.ifYesIsShown);
     }
 }
 //These functions need to be global! These functions are activated when an item from the corresponding dropdown is selected
